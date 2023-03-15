@@ -6,5 +6,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@800&display=swap");
 
 section {
-  @apply border-2 border-white;
+  @apply p-2 m-4;
 }

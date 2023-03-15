@@ -40,7 +40,7 @@ const getBackground = () => {
 
     ]
 
-    return obj[4].result[1].background
+    return obj[3].result[1].background
 
 }
 

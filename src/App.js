@@ -8,6 +8,8 @@ import Data from './Components/Data';
 function App() {
 
   const apikey = '197d20a9e4425ce99bdbf736f947c8b8';
+  {/*useState*/ }
+  const [click, updateClick] = useState(false)
   const [val, updateVal] = useState("");
   const [weatherdata, updateWeatherData] = useState({
     feelsLike: '',
@@ -21,29 +23,46 @@ function App() {
 
   })
 
+  const reset = () => {
+    updateVal("")
+  }
+
+  const toggle = () => {
+    updateClick(!click);
+  }
+
+  const flip = click ? 'block' : 'hidden'
+
   const { feelsLike, humidity, temp, description, icon, main, windspeed, city } = weatherdata;
 
 
   const getData = async () => {
-    await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Memphis&appid=${apikey}`)
+    await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${val}&appid=${apikey}&units=imperial`)
       .then(function (res) {
         const { feels_like, humidity, pressure, temp, temp_max, temp_min } = res.data.main;
         const { description, icon, id, main } = res.data.weather[0];
         const { deg, speed } = res.data.wind
         const city = res.data.name;
 
-        // updateWeatherData({ ...weatherdata })
-
-        console.log(res)
+        updateWeatherData({ ...weatherdata, feelsLike: feels_like, humidity: humidity, temp: temp, description: description, icon: icon, main: main, windspeed: speed, city: city })
 
       })
 
+    reset();
+    toggle();
+
+  }
+
+  const getForecast = async () => {
+    await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${val}&appid=${apikey}&units=imperial`)
+      .then((res) => console.log(res))
   }
 
 
 
   return (
-    <div className={`w-full h-full ${getBackground()} bg-cover bg-no-repeat bg-center grid grid-cols-1 grid-rows-3`}>
+    <div className={`w-full h-full ${getBackground()} bg-cover bg-no-repeat bg-center grid grid-cols-1 grid-rows-4`}>
+      {/*1st section*/}
       <section className='p-2 text-center space-x-2'>
         <input
           type="text"
@@ -54,11 +73,20 @@ function App() {
         />
         <i className="fa-solid fa-magnifying-glass cursor-pointer text-xl" onClick={getData}></i>
       </section>
+      <section className={`${flip}`}>
+        <div className='flex justify-center space-x-2'>
+          <h1 className='border-2 p-2 cursor-pointer'>3 Day Forecast</h1>
+          <h1 className='border-2 p-2 cursor-pointer'>5 Day Forecast</h1>
+          <h1 className='border-2 p-2 cursor-pointer'>7 Day Forecast</h1>
+          <h1 className='border-2 p-2 cursor-pointer'>10 Day Forecast</h1>
+        </div>
+      </section>
+      {/*2nd section*/}
       <section className='flex justify-center items-center'>
-        <div className='border-2 border-white flex gap-4 p-12 rounded-xl'>
+        <div className={`border-2 border-white flex items-center gap-4 p-6 rounded-xl ${flip}`}>
 
-          <div className='flex flex-col items-center gap-2'>
-            <img src={`http://openweathermap.org/img/w/${icon}.png`} alt="" />
+          <div className='flex flex-col justify-center gap-2'>
+            <img src={`http://openweathermap.org/img/w/${icon}.png`} alt="" className='' />
             <h1 className='text-4xl font-bold'>{city}</h1>
           </div>
           <p className='self-center text-7xl'>{temp}</p>
@@ -67,10 +95,10 @@ function App() {
             <p>Wind: {windspeed}</p>
             <p>Feels Like: {feelsLike}</p>
           </div>
-
         </div>
       </section>
-      <section className='p-2'>
+      {/*3rd section*/}
+      <section className='p-8'>
         <Data />
       </section>
     </div>
