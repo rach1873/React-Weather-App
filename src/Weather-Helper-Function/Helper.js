@@ -1,4 +1,4 @@
-const getBackground = () => {
+const getBackground = (color) => {
 
     const obj = [
         {
@@ -35,12 +35,11 @@ const getBackground = () => {
         },
         {
             id: "mist",
-            result: [{ icon: "50d", background: "mistday" }, { icon: "50n", background: "mistnight" }]
+            result: [{ icon: "50d", background: "mistday" }, { icon: "50n", background: "bg-mistnight" }]
         }
 
     ]
 
-    return obj[3].result[1].background
 
 }
 
@@ -60,4 +59,11 @@ const getDate = () => {
     return day + ", " + month + " " + currentDay + ", " + year;
 }
 
-export { getBackground, getDate };
+const floor = (num) => {
+    return Math.floor(num) + '°';
+}
+
+
+
+export { getBackground, getDate, floor };
+
