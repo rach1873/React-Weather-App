@@ -1,46 +1,86 @@
-const getBackground = (color) => {
+const getBackground = (icon) => {
 
-    const obj = [
+    const arr = [
         {
-            id: "clear sky",
-            result: [{ icon: "01d", background: "bg-clearskyday" }, { icon: "01n", background: "bg-clearskynight" }]
+            id: "01d",
+            pic: "bg-clearskyday"
         },
         {
-            id: "few clouds",
-            result: [{ icon: "02d", background: "bg-cloudsday" }, { icon: "02n", background: "bg-cloudsnight" }]
+            id: "01n",
+            pic: "bg-clearskynight"
         },
         {
-            id: "scattered clouds",
-            result: [{ icon: "03d", background: "bg-cloudsday" }, { icon: "03n", background: "bg-cloudsnight" }]
+            id: "02d",
+            pic: "bg-cloudsday"
         },
         {
-            id: "broken clouds",
-            result: [{ icon: "04d", background: "bg-cloudsday" }, { icon: "04n", background: "bg-cloudsnight" }]
+            id: "02n",
+            pic: "bg-cloudsnight"
         },
         {
-            id: "shower rain",
-            result: [{ icon: "09d", background: "bg-rainday" }, { icon: "09n", background: "bg-rainnight" }]
+            id: "03d",
+            pic: "bg-cloudsday"
         },
         {
-            id: "rain",
-            result: [{ icon: "10d", background: "bg-rainday" }, { icon: "10n", background: "bg-rainnight" }]
+            id: "03n",
+            pic: "bg-cloudsnight"
         },
         {
-            id: "thunderstorm",
-            result: [{ icon: "11d", background: "bg-thunderstormday" }, { icon: "11n", background: "bg-thunderstormnight" }]
+            id: "04d",
+            pic: "bg-cloudsday"
         },
         {
-            id: "snow",
-            result: [{ icon: "13d", background: "snowday" }, { icon: "13n", background: "bg-snownight" }]
+            id: "04n",
+            pic: "bg-cloudsnight"
         },
         {
-            id: "mist",
-            result: [{ icon: "50d", background: "mistday" }, { icon: "50n", background: "bg-mistnight" }]
+            id: "09d",
+            pic: "bg-rainday"
+        },
+        {
+            id: "09n",
+            pic: "bg-rainnight"
+        },
+        {
+            id: "10d",
+            pic: "bg-rainday"
+        },
+        {
+            id: "10n",
+            pic: "bg-rainnight"
+        },
+        {
+            id: "11d",
+            pic: "bg-thunderstormday"
+        },
+        {
+            id: "11n",
+            pic: "thunderstormnight"
+        },
+        {
+            id: "13d",
+            pic: "bg-snowday"
+        },
+        {
+            id: "13n",
+            pic: "bg-snownight"
+        },
+        {
+            id: "50d",
+            pic: "bg-mistday"
+        },
+        {
+            id: "50n",
+            pic: "bg-mistnight"
         }
-
     ]
 
 
+
+    // return arr.find(x => x.id === icon).pic
+    // return arr.map(x => x.id === icon ? x.pic : 'bg-blue-500')
+
+    return arr.find((x) => x.id === icon).pic
 }
 
 const getDate = () => {
@@ -61,6 +101,13 @@ const getDate = () => {
 
 const floor = (num) => {
     return Math.floor(num) + '°';
+}
+
+const getDay = (num) => {
+    let dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+
+    return
 }
 
 

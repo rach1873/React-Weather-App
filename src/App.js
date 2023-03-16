@@ -13,6 +13,7 @@ function App() {
   {/*useState*/ }
   const [click, updateClick] = useState(false)
   const [val, updateVal] = useState("");
+  const [num, updateNum] = useState(0)
   const [weatherdata, updateWeatherData] = useState({
     feelsLike: '',
     humidity: '',
@@ -67,16 +68,25 @@ function App() {
 
         updateWeatherData({ ...weatherdata, threeDay: res.data.list })
 
-        console.log(res.data.list)
       })
 
   }
 
+  const clickButton = (e) => {
+    const id = e.target.id;
 
+    updateNum(Number(id))
+
+    getForecast();
+
+  }
+
+
+  const getIcon = icon ? getBackground(icon) : 'bg-orange-300'
 
 
   return (
-    <div className={`w-full h-full bg-black bg-cover bg-no-repeat bg-center grid grid-cols-1`}>
+    <div className={`w-full h-full ${getIcon} bg-blue-400 bg-cover bg-no-repeat bg-center grid grid-cols-1`}>
       {/*1st section*/}
       <section className='p-2 text-center space-x-2'>
         <input
@@ -87,15 +97,15 @@ function App() {
           onChange={(e) => updateVal(e.target.value)}
         />
         <i className="fa-solid fa-magnifying-glass cursor-pointer text-xl" onClick={getData}></i>
-        <button className='border-2 p-2' onClick={getForecast}>Forecast</button>
+        {/* <button className='border-2 p-2' onClick={getForecast}>Forecast</button> */}
       </section>
       {/*2nd section*/}
       <section className={`${flip} flex items-center justify-center`}>
         <div className='space-y-2'>
-          <h1 className='border-2 p-2 cursor-pointer'>3 Day Forecast</h1>
-          <h1 className='border-2 p-2 cursor-pointer'>5 Day Forecast</h1>
-          <h1 className='border-2 p-2 cursor-pointer'>7 Day Forecast</h1>
-          <h1 className='border-2 p-2 cursor-pointer'>10 Day Forecast</h1>
+          <h1 className='border-2 p-2 cursor-pointer' id='3' onClick={clickButton}>3 Day Forecast</h1>
+          <h1 className='border-2 p-2 cursor-pointer' id='5' onClick={clickButton}>5 Day Forecast</h1>
+          <h1 className='border-2 p-2 cursor-pointer' id='7' onClick={clickButton}>7 Day Forecast</h1>
+          <h1 className='border-2 p-2 cursor-pointer' id='10' onClick={clickButton}>10 Day Forecast</h1>
         </div>
       </section>
       {/*3rd section*/}
@@ -114,9 +124,10 @@ function App() {
         </div>
       </section>
       {/*4th section*/}
-      <section className='p-8 grid gap-2 grid-cols-10'>
-        {weatherdata.threeDay.splice(0, 10).map(x => <Data key={x.main.temp} temp={x.main.temp} icon={x.weather[0].icon} desc={x.weather[0].main} />)}
-
+      <section className='p-2 flex justify-center'>
+        <div className='flex gap-2 max-md:flex-col'>
+          {weatherdata.threeDay.splice(0, num).map(x => <Data key={x.main.temp} temp={x.main.temp} icon={x.weather[0].icon} desc={x.weather[0].main} />)}
+        </div>
       </section>
     </div>
   );
