@@ -54,9 +54,13 @@ function App() {
         const { deg, speed } = res.data.wind
         const city = res.data.name;
 
+
+        console.log(res)
         updateWeatherData({ ...weatherdata, feelsLike: feels_like, humidity: humidity, temp: floor(temp), description: description, icon: icon, main: main, windspeed: speed, city: city })
 
       })
+
+
 
     reset();
     toggle();
@@ -84,11 +88,11 @@ function App() {
   }
 
 
-  const getIcon = icon ? getBackground(icon) : 'bg-orange-300'
+  const getIcon = icon ? getBackground(icon) : 'bg-weatherblue'
 
 
   return (
-    <div className={`w-full h-full ${getIcon} bg-blue-400 bg-cover bg-no-repeat bg-center grid grid-cols-1`}>
+    <div className={`w-full h-full ${getIcon} bg-cover bg-no-repeat bg-center grid grid-cols-1`}>
       {/*1st section*/}
       <section className='p-2 text-center space-x-2'>
         <input
@@ -104,16 +108,17 @@ function App() {
       {/*2nd section*/}
       <section className={`${flip} flex items-center justify-center`}>
         <div className='space-y-2'>
-          <h1 className='border-2 p-2 cursor-pointer' id='3' onClick={clickButton}>3 Day Forecast</h1>
-          <h1 className='border-2 p-2 cursor-pointer' id='5' onClick={clickButton}>5 Day Forecast</h1>
-          <h1 className='border-2 p-2 cursor-pointer' id='7' onClick={clickButton}>7 Day Forecast</h1>
-          <h1 className='border-2 p-2 cursor-pointer' id='10' onClick={clickButton}>10 Day Forecast</h1>
+          <h1 className='border-2 border-orange-400 rounded-xl p-2 cursor-pointer hover:bg-gray-500' id='3' onClick={clickButton}>3 Day Forecast</h1>
+          <h1 className='border-2 border-orange-400 rounded-xl p-2 cursor-pointer hover:bg-gray-500' id='5' onClick={clickButton}>5 Day Forecast</h1>
+          <h1 className='border-2 border-orange-400 rounded-xl p-2 cursor-pointer hover:bg-gray-500' id='7' onClick={clickButton}>7 Day Forecast</h1>
+          <h1 className='border-2 border-orange-400 rounded-xl p-2 cursor-pointer hover:bg-gray-500' id='10' onClick={clickButton}>10 Day Forecast</h1>
         </div>
       </section>
       {/*3rd section*/}
       <section className='flex justify-center items-center'>
         <div className={`border-2 border-white flex items-center gap-4 p-2 rounded-xl max-md:flex-col ${flip}`}>
           <div className='flex flex-col justify-center gap-2'>
+            <p className='capitalize'>{description}</p>
             <img src={`http://openweathermap.org/img/w/${icon}.png`} alt="" className='' />
             <h1 className='text-4xl font-bold'>{city}</h1>
           </div>
@@ -126,10 +131,11 @@ function App() {
         </div>
       </section>
       {/*4th section*/}
-      <section className='p-2 flex justify-center'>
+      <section className='flex justify-center'>
         <div className='flex gap-2 max-md:flex-col'>
-          {/* {weatherdata.threeDay.splice(0, num).map(x => <Data key={x.main.temp} dt={getWeekDay(x.dt)} temp={x.main.temp} icon={x.weather[0].icon} desc={x.weather[0].main} />)} */}
+
           {weatherdata.threeDay.splice(0, num).map((x, i) => {
+
             const days = build(num);
 
             return <Data key={x.main.temp} day={days[i]} temp={x.main.temp} icon={x.weather[0].icon} desc={x.weather[0].main} />
