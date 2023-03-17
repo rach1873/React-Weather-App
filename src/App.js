@@ -1,13 +1,14 @@
 import axios from 'axios';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
-  getBackground, getDate, floor
+  getBackground, getDate, floor, getWeekDay, build
 } from './Weather-Helper-Function/Helper';
 import Data from './Components/Data';
 
 
 
 function App() {
+
 
   const apikey = '197d20a9e4425ce99bdbf736f947c8b8';
   {/*useState*/ }
@@ -24,6 +25,7 @@ function App() {
     windspeed: '',
     city: '',
     threeDay: [],
+    dt: ''
   })
 
 
@@ -67,7 +69,7 @@ function App() {
       .then((res) => {
 
         updateWeatherData({ ...weatherdata, threeDay: res.data.list })
-
+        console.log(res)
       })
 
   }
@@ -126,7 +128,13 @@ function App() {
       {/*4th section*/}
       <section className='p-2 flex justify-center'>
         <div className='flex gap-2 max-md:flex-col'>
-          {weatherdata.threeDay.splice(0, num).map(x => <Data key={x.main.temp} temp={x.main.temp} icon={x.weather[0].icon} desc={x.weather[0].main} />)}
+          {/* {weatherdata.threeDay.splice(0, num).map(x => <Data key={x.main.temp} dt={getWeekDay(x.dt)} temp={x.main.temp} icon={x.weather[0].icon} desc={x.weather[0].main} />)} */}
+          {weatherdata.threeDay.splice(0, num).map((x, i) => {
+            const days = build(num);
+
+            return <Data key={x.main.temp} day={days[i]} temp={x.main.temp} icon={x.weather[0].icon} desc={x.weather[0].main} />
+
+          })}
         </div>
       </section>
     </div>

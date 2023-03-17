@@ -111,6 +111,24 @@ const getDay = (num) => {
 }
 
 
+const getWeekDay = (dte) => {
+    let dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-export { getBackground, getDate, floor };
+    return dayNames[new Date(dte * 1000).getDay()]
+}
+
+function build(endNum) {
+
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+
+    let start = new Date().getDay() + 1;
+
+    endNum = start + endNum
+
+    return dayNames.slice(start, endNum);
+}
+
+
+export { getBackground, getDate, floor, getWeekDay, build };
 
