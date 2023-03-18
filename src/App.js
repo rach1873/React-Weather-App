@@ -89,10 +89,11 @@ function App() {
 
 
   const getIcon = icon ? getBackground(icon) : 'bg-weatherblue'
+  const textColor = ['01n', '02n', '03n', '04n', '09n', '10n', '11n', '13n', '50n'].includes(icon) ? 'text-white' : 'text-orange-500'
 
 
   return (
-    <div className={`w-full h-full ${getIcon} bg-cover bg-no-repeat bg-center grid grid-cols-1`}>
+    <div className={`w-full h-full ${getIcon} ${textColor} bg-cover bg-no-repeat bg-center grid grid-cols-1`}>
       {/*1st section*/}
       <section className='p-2 text-center space-x-2'>
         <input
