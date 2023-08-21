@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import {
   getBackground, getDate, floor, getWeekDay, build
 } from './Weather-Helper-Function/Helper';
@@ -10,12 +10,12 @@ import Data from './Components/Data';
 function App() {
 
 
-  const apikey = '197d20a9e4425ce99bdbf736f947c8b8';
+  const apikey = process.env.REACT_APP_API_KEY;
   {/*useState*/ }
-  const [click, updateClick] = useState(0)
+  const [click, updateClick] = useState(0);
   const [val, updateVal] = useState("");
-  const [num, updateNum] = useState(0)
-  const [problem, updateProblem] = useState(false)
+  const [num, updateNum] = useState(0);
+  const [problem, updateProblem] = useState(false);
   const [weatherdata, updateWeatherData] = useState({
     feelsLike: '',
     humidity: '',
@@ -27,21 +27,21 @@ function App() {
     city: '',
     threeDay: [],
     dt: ''
-  })
+  });
 
 
 
 
 
   const reset = () => {
-    updateVal("")
-  }
+    updateVal("");
+  };
 
 
   // const flip = click ? 'block' : 'hidden'
   // const flip = problem ? 'hidden' : 'block'
 
-  const flip = (click === 0 || problem) ? 'hidden' : 'block'
+  const flip = (click === 0 || problem) ? 'hidden' : 'block';
 
   const { feelsLike, humidity, temp, description, icon, main, windspeed, city } = weatherdata;
 
@@ -56,52 +56,52 @@ function App() {
         .then(function (res) {
           const { feels_like, humidity, pressure, temp, temp_max, temp_min } = res.data.main;
           const { description, icon, id, main } = res.data.weather[0];
-          const { deg, speed } = res.data.wind
+          const { deg, speed } = res.data.wind;
           const city = res.data.name;
 
-          updateWeatherData({ ...weatherdata, feelsLike: feels_like, humidity: humidity, temp: floor(temp), description: description, icon: icon, main: main, windspeed: speed, city: city })
+          updateWeatherData({ ...weatherdata, feelsLike: feels_like, humidity: humidity, temp: floor(temp), description: description, icon: icon, main: main, windspeed: speed, city: city });
 
-          updateProblem(false)
+          updateProblem(false);
 
-          updateClick(click + 1)
+          updateClick(click + 1);
 
-        })
+        });
     }
 
 
     catch (err) {
-      updateProblem(true)
-      alert('City not found!!!')
+      updateProblem(true);
+      alert('City not found!!!');
     }
 
     reset();
 
 
 
-  }
+  };
 
   const getForecast = async () => {
     await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apikey}&units=imperial`)
       .then((res) => {
 
-        updateWeatherData({ ...weatherdata, threeDay: res.data.list })
+        updateWeatherData({ ...weatherdata, threeDay: res.data.list });
 
-      })
+      });
 
-  }
+  };
 
   const clickButton = (e) => {
     const id = e.target.id;
 
-    updateNum(Number(id))
+    updateNum(Number(id));
 
     getForecast();
 
-  }
+  };
 
 
-  const getIcon = icon ? getBackground(icon) : 'bg-weatherblue'
-  const textColor = ['01n', '02n', '03n', '04n', '09n', '10n', '11n', '13n', '50n'].includes(icon) ? 'text-white' : 'text-orange-500'
+  const getIcon = icon ? getBackground(icon) : 'bg-weatherblue';
+  const textColor = ['01n', '02n', '03n', '04n', '09n', '10n', '11n', '13n', '50n'].includes(icon) ? 'text-white' : 'text-orange-500';
 
 
   return (
@@ -151,7 +151,7 @@ function App() {
 
             const days = build(num);
 
-            return <Data key={x.main.temp} day={days[i]} temp={x.main.temp} icon={x.weather[0].icon} desc={x.weather[0].main} />
+            return <Data key={x.main.temp} day={days[i]} temp={x.main.temp} icon={x.weather[0].icon} desc={x.weather[0].main} />;
 
           })}
         </div>
